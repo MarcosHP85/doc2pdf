@@ -10,8 +10,8 @@ import java.util.List;
 
 public class PlanoCodFunRepository {
 
-//    private static final String PCF_FOLDER = "\\\\doccnaii\\tecnica\\ic\\cf";
-    private static final String PCF_FOLDER = "/Users/ElMUDO-PC/cf";
+    private static final String PCF_FOLDER = "\\\\doccnaii\\tecnica\\ic\\cf";
+//    private static final String PCF_FOLDER = "/Users/ElMUDO-PC/cf";
 
     public List<Documento> findBy(String c) {
         List<Documento> listPcf = new ArrayList<>();
