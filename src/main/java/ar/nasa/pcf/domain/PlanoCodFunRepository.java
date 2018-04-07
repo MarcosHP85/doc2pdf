@@ -10,15 +10,34 @@ import java.util.List;
 
 public class PlanoCodFunRepository {
 
-    public static final String PCF_FOLDER = "\\\\doccnaii\\tecnica\\ic\\cf";
+//    private static final String PCF_FOLDER = "\\\\doccnaii\\tecnica\\ic\\cf";
+    private static final String PCF_FOLDER = "/Users/ElMUDO-PC/cf";
 
     public List<Documento> findBy(String c) {
         List<Documento> listPcf = new ArrayList<>();
 
         try {
             Files.newDirectoryStream(Paths.get(PCF_FOLDER),
-                    path -> path.toString().endsWith(".pdf"))
-                    .forEach(path -> listPcf.add(new PlanoCodFun(path)));
+                path -> path.toFile().isDirectory())
+                .forEach(path -> {
+                    try {
+                        Files.newDirectoryStream(path,
+                            subPath ->  subPath.toString().endsWith("YS") || subPath.toString().endsWith("YF"))
+                            .forEach(finalPath -> {
+                                try {
+                                    Files.newDirectoryStream(finalPath,
+                                        file -> file.toString().contains(c)).forEach(
+                                        plano -> listPcf.add(new PlanoCodFun(plano))
+                                    );
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            );
 
         } catch (IOException e) {
             e.printStackTrace();

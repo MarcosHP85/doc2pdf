@@ -56,6 +56,7 @@ public class MainView {
 	private CheckBox checkHdM;
 	private CheckBox checkLvL;
 	private CheckBox checkMkb;
+	private CheckBox checkPcf;
 	
 	public MainView(Stage primaryStage) {
 		stage = primaryStage;
@@ -108,6 +109,7 @@ public class MainView {
 		checkHdM = new CheckBox("Hoja Medición");
 		checkLvL = new CheckBox("Valores Limites");
 		checkMkb = new CheckBox("Mkb6");
+		checkPcf = new CheckBox("Planos");
 		
 		checkTodo(true);
 
@@ -133,8 +135,12 @@ public class MainView {
             checkOpcion(newValue);
             controller.setBuscarMkb(newValue);
         });
+        checkPcf.selectedProperty().addListener((obj, oldValue, newValue) -> {
+            checkOpcion(newValue);
+            controller.setBuscarPcf(newValue);
+        });
 		
-		HBox hboxOpciones = new HBox(checkTodo, checkLyP, checkHisto, checkHdM, checkLvL, checkMkb);
+		HBox hboxOpciones = new HBox(checkTodo, checkLyP, checkHisto, checkHdM, checkLvL, checkMkb, checkPcf);
 		hboxOpciones.setPadding(new Insets(0,0,15,0));
 		hboxOpciones.setSpacing(10);
 		hboxOpciones.setAlignment(Pos.CENTER);
@@ -151,6 +157,7 @@ public class MainView {
 		checkHdM.setSelected(value);
 		checkLvL.setSelected(value);
 		checkMkb.setSelected(value);
+		checkPcf.setSelected(value);
 	}
 	
 	private void checkOpcion(boolean value) {
@@ -165,7 +172,8 @@ public class MainView {
 				&& checkHisto.isSelected() 
 				&& checkHdM.isSelected() 
 				&& checkLvL.isSelected()
-                && checkMkb.isSelected();
+                && checkMkb.isSelected()
+                && checkPcf.isSelected();
 	}
 	
 	private void disableBuscar(boolean valor) {
@@ -189,21 +197,18 @@ public class MainView {
 		disableBuscar(true);
 		
 		Task<CheckBoxTreeItem<Documento>> task = taskBuscar();
-		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent event) {
-				CheckBoxTreeItem<Documento> rootItem = task.getValue();
+		task.setOnSucceeded(event -> {
+            CheckBoxTreeItem<Documento> rootItem = task.getValue();
 
-				if (!rootItem.isLeaf()) {
-					tree.setRoot(rootItem);
-					botonDescargar.requestFocus();
-				} else {
-					tree.setRoot(null);
-				}
+            if (!rootItem.isLeaf()) {
+                tree.setRoot(rootItem);
+                botonDescargar.requestFocus();
+            } else {
+                tree.setRoot(null);
+            }
 
-				disableBuscar(false);
-			}
-		});
+            disableBuscar(false);
+        });
 		progressBar.setVisible(true);
 		progressBar.progressProperty().unbind();
 		progressBar.progressProperty().bind(task.progressProperty());
@@ -217,7 +222,7 @@ public class MainView {
 		return new Task<CheckBoxTreeItem<Documento>>() {
 
 			@Override
-			protected CheckBoxTreeItem<Documento> call() throws Exception {
+			protected CheckBoxTreeItem<Documento> call() {
 				Integer count = 0;
 				CheckBoxTreeItem<Documento> treeItemRoot = 
 						new CheckBoxTreeItem<>(new Grupo("Todo"));
@@ -343,7 +348,7 @@ public class MainView {
 		return new Task<Void>() {
 
 			@Override
-			protected Void call() throws Exception {
+			protected Void call() {
 				updateProgress(0, 1);
 
 				Map<String, List<Documento>> arbol = new HashMap<>();
@@ -370,7 +375,7 @@ public class MainView {
 							: textDestino.getText());
 					
 					if (!carpeta.isDirectory())
-						carpeta.mkdirs();
+						if (!carpeta.mkdirs()) break;
 					
 					for (Documento d: arbol.get(key)) {
 						updateProgress(++count, total + 1);
