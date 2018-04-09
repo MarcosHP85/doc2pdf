@@ -15,29 +15,41 @@ public class PlanoCodFunRepository {
 
     public List<Documento> findBy(String c) {
         List<Documento> listPcf = new ArrayList<>();
+        String comp = c.toUpperCase();
 
         try {
             Files.newDirectoryStream(Paths.get(PCF_FOLDER),
-                path -> path.toFile().isDirectory())
-                .forEach(path -> {
-                    try {
-                        Files.newDirectoryStream(path,
-                            subPath ->  subPath.toString().endsWith("YS") || subPath.toString().endsWith("YF"))
-                            .forEach(finalPath -> {
-                                try {
-                                    Files.newDirectoryStream(finalPath,
-                                        file -> file.toString().contains(c)).forEach(
-                                        plano -> listPcf.add(new PlanoCodFun(plano))
-                                    );
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            );
+                    path -> path.toFile().isDirectory())
+                    .forEach(path -> {
+                        try {
+                            Files.newDirectoryStream(path,
+                                    subPath -> subPath.toString().endsWith("YS") || subPath.toString().endsWith("YF"))
+                                    .forEach(subPath -> {
+                                        try {
+                                            Files.newDirectoryStream(subPath,
+                                                    comPath -> comPath.toString().endsWith(comp.substring(0,5)))
+                                                    .forEach(finalPath -> {
+                                                        try {
+                                                            Files.newDirectoryStream(finalPath,
+                                                                    file -> {
+                                                                        String filePath = file.toString().toUpperCase();
+                                                                        return filePath.endsWith(".PDF") && filePath.contains(comp);
+                                                                    })
+                                                                    .forEach(
+                                                                            plano -> listPcf.add(new PlanoCodFun(plano))
+                                                                    );
+                                                        } catch (IOException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    });
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
 
         } catch (IOException e) {
             e.printStackTrace();
