@@ -10,20 +10,20 @@ import java.util.List;
 
 public class Mkb extends Documento {
 
-    public List<AreaPrincipal> getAreaPrincipals() {
-        return areaPrincipals;
+    public List<MkbAreaPrincipal> getMkbAreaPrincipals() {
+        return mkbAreaPrincipals;
     }
 
-    private List<AreaPrincipal> areaPrincipals;
+    private List<MkbAreaPrincipal> mkbAreaPrincipals;
 
-    public Mkb(List<AreaPrincipal> areaPrincipals) {
-        this.areaPrincipals = areaPrincipals;
+    public Mkb(List<MkbAreaPrincipal> mkbAreaPrincipals) {
+        this.mkbAreaPrincipals = mkbAreaPrincipals;
     }
 
     @Override
     public void pdfEnCarpeta(String carpeta) {
 
-        for (AreaPrincipal ap : areaPrincipals) {
+        for (MkbAreaPrincipal ap : mkbAreaPrincipals) {
             String fileName = "MKB " + ap.getKks();
             fileName += (ap.getKks2() != null) ? "-" + ap.getKks2() : "";
 
@@ -40,13 +40,13 @@ public class Mkb extends Documento {
 
     @Override
     public String toString() {
-        String tmp = "MKB ";
+        StringBuilder tmp = new StringBuilder("MKB ");
 
-        for (AreaPrincipal ap : areaPrincipals) {
-            tmp += ap.getKks();
-            tmp += (ap.getKks2() != null) ? "-" + ap.getKks2() + " " : " ";
+        for (MkbAreaPrincipal ap : mkbAreaPrincipals) {
+            tmp.append(ap.getKks());
+            tmp.append((ap.getKks2() != null) ? "-" + ap.getKks2() + " " : " ");
         }
 
-        return tmp;
+        return tmp.toString();
     }
 }

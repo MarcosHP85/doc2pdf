@@ -5,8 +5,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "area_principal")
-public class AreaPrincipal {
+@Table(name = "mkb.area_principal")
+public class MkbAreaPrincipal {
 
     private Integer id;
     private String kks;

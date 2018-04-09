@@ -11,7 +11,7 @@ public class MkbServise {
     public Documento documentoPara(String c) {
         Mkb mkb = getMkbRepository().findBy(c);
 
-        return (mkb.getAreaPrincipals().isEmpty()) ? null : mkb;
+        return (mkb.getMkbAreaPrincipals().isEmpty()) ? null : mkb;
     }
 
     private MkbRepository getMkbRepository() {

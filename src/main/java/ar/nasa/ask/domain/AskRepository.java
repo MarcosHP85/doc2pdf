@@ -1,30 +1,30 @@
-package ar.nasa.mkb.domain;
+package ar.nasa.ask.domain;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
-public class MkbRepository {
+public class AskRepository {
 
     private EntityManagerFactory sessionFactory;
 
-    public MkbRepository() {
+    public AskRepository() {
         sessionFactory = Persistence.createEntityManagerFactory("mysql.mkb");
     }
 
-    public Mkb findBy(String c) {
+    public Ask findBy(String c) {
 
         EntityManager entityManager = sessionFactory.createEntityManager();
 
-        List<MkbAreaPrincipal> mkbAreaPrincipals = entityManager
-                .createQuery("FROM AskAreaPrincipal a WHERE a.kks = :c", MkbAreaPrincipal.class)
+        List<AskAreaPrincipal> askAreaPrincipals = entityManager
+                .createQuery("FROM AskAreaPrincipal a WHERE a.kks = :c", AskAreaPrincipal.class)
                 .setParameter("c", c)
                 .getResultList();
 
         entityManager.close();
 
-        return new Mkb(mkbAreaPrincipals);
+        return new Ask(askAreaPrincipals);
     }
 
     public void close() {

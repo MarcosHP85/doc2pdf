@@ -13,12 +13,14 @@ public class MainController {
 	private ListaValoresLimitesService listaValoresLimitesService;
 	private PlanoCodFunService planoCodFunService;
 	private MkbServise mkbServise;
+	private AskService askService;
 	private IfsService ifsService;
 	private boolean buscarLyp;
 	private boolean buscarHisto;
 	private boolean buscarHdM;
 	private boolean buscarLvL;
 	private boolean buscarMkb;
+    private boolean buscarAsk;
 	private boolean buscarPcf;
 	
 	public MainController() {
@@ -26,6 +28,7 @@ public class MainController {
 		listaValoresLimitesService = new ListaValoresLimitesService();
 		planoCodFunService = new PlanoCodFunService();
 		mkbServise = new MkbServise();
+		askService = new AskService();
 		ifsService = new IfsService();
 	}
 	
@@ -35,7 +38,7 @@ public class MainController {
 		try {
 			Long numOt = Long.parseLong(c);
 
-			if (buscarLyp || buscarHisto || buscarHdM || buscarLvL || buscarMkb || buscarPcf) {
+			if (buscarLyp || buscarHisto || buscarHdM || buscarLvL || buscarMkb || buscarAsk || buscarPcf) {
 				LverYPacc lyp = ifsService.lverYPaccPara(numOt);
 
 				if (lyp != null) {
@@ -71,6 +74,12 @@ public class MainController {
 		    Documento mkb = mkbServise.documentoPara(c);
 		    if (mkb != null)
 		        docs.add(mkb);
+        }
+
+        if (buscarAsk) {
+            Documento ask = askService.documentoPara(c);
+            if (ask != null)
+                docs.add(ask);
         }
 
         if (buscarPcf) {
@@ -134,12 +143,21 @@ public class MainController {
         this.buscarPcf = buscarPcf;
     }
 
+    public boolean isBuscarAsk() {
+        return buscarAsk;
+    }
+
+    public void setBuscarAsk(boolean buscarAsk) {
+        this.buscarAsk = buscarAsk;
+    }
+
     public void setBuscarTodo(boolean value) {
 		this.buscarLyp = value;
 		this.buscarHdM = value;
 		this.buscarHisto = value;
 		this.buscarLvL = value;
 		this.buscarMkb = value;
+		this.buscarAsk = value;
 		this.buscarPcf = value;
 
 	}

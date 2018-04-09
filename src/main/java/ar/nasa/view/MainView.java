@@ -56,6 +56,7 @@ public class MainView {
     private CheckBox checkHdM;
     private CheckBox checkLvL;
     private CheckBox checkMkb;
+    private CheckBox checkAsk;
     private CheckBox checkPcf;
 
     public MainView(Stage primaryStage) {
@@ -115,6 +116,7 @@ public class MainView {
         checkHdM = new CheckBox("Hoja Medición");
         checkLvL = new CheckBox("Valores Limites");
         checkMkb = new CheckBox("Mkb");
+        checkAsk = new CheckBox("Ask");
         checkPcf = new CheckBox("Planos");
 
         checkTodo(true);
@@ -141,12 +143,16 @@ public class MainView {
             checkOpcion(newValue);
             controller.setBuscarMkb(newValue);
         });
+        checkAsk.selectedProperty().addListener((obj, oldValue, newValue) -> {
+            checkOpcion(newValue);
+            controller.setBuscarAsk(newValue);
+        });
         checkPcf.selectedProperty().addListener((obj, oldValue, newValue) -> {
             checkOpcion(newValue);
             controller.setBuscarPcf(newValue);
         });
 
-        HBox hboxOpciones = new HBox(checkTodo, checkLyP, checkHisto, checkHdM, checkLvL, checkMkb, checkPcf);
+        HBox hboxOpciones = new HBox(checkTodo, checkLyP, checkHisto, checkHdM, checkLvL, checkMkb, checkAsk, checkPcf);
         hboxOpciones.setPadding(new Insets(0,0,15,0));
         hboxOpciones.setSpacing(10);
         hboxOpciones.setAlignment(Pos.CENTER);
@@ -163,6 +169,7 @@ public class MainView {
         checkHdM.setSelected(value);
         checkLvL.setSelected(value);
         checkMkb.setSelected(value);
+        checkAsk.setSelected(value);
         checkPcf.setSelected(value);
     }
 
@@ -179,6 +186,7 @@ public class MainView {
                 && checkHdM.isSelected()
                 && checkLvL.isSelected()
                 && checkMkb.isSelected()
+                && checkAsk.isSelected()
                 && checkPcf.isSelected();
     }
 

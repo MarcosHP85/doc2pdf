@@ -19,7 +19,7 @@
 		<properties>
 			<property name="hibernate.connection.url" value="jdbc:postgresql://psqlpro:5432/valores_limites"/>
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
 			<property name="hibernate.connection.username" value="postgres"/>
 			<property name="hibernate.connection.password" value="postgres1"/>
 		</properties>
@@ -27,11 +27,13 @@
 	<persistence-unit name="mysql.mkb">
 		<class>ar.nasa.lvl.domain.Valor</class>
 		<properties>
-			<property name="hibernate.connection.url" value="jdbc:mysql://doccnaii:3306/mkb"/>
+			<property name="hibernate.connection.url" value="jdbc:mysql://doccnaii:3306/"/>
 			<property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="hibernate.connection.username" value="visor"/>
 			<property name="hibernate.connection.password" value="visor"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
 		</properties>
 	</persistence-unit>
 	
