@@ -2,6 +2,8 @@ package ar.nasa.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ar.nasa.domain.Documento;
 import ar.nasa.ifs.domain.LverYPacc;
@@ -34,6 +36,7 @@ public class MainController {
 	
 	public List<Documento> documentosPara(String c) {
 		List<Documento> docs = new ArrayList<>();
+		boolean esPlanta2000 = true;
 
 		try {
 			Long numOt = Long.parseLong(c);
@@ -43,13 +46,18 @@ public class MainController {
 
 				if (lyp != null) {
                     c = lyp.getOt().getComponente().getMchCode();
+                    esPlanta2000 = lyp.getOt().getPlantaOt().equals("2000");
 
                     if (buscarLyp)
                         docs.add(lyp);
                 }
 			}
 		} catch(NumberFormatException e) {
-		    System.out.println(c + " no es un número de OT");
+		    Pattern p = Pattern.compile("\\w{3}\\d{2}\\w{2}.{3,}");
+            Matcher m = p.matcher(c);
+
+            if (m.find())
+                esPlanta2000 = false;
         }
 
 		if (buscarHisto) {
@@ -58,31 +66,31 @@ public class MainController {
 				docs.add(histo);
 		}
 		
-		if (buscarHdM) {
+		if (buscarHdM && esPlanta2000) {
 			List<Documento> hm = hojaDeMedicionService.documentoPara(c);
 			if (hm != null)
 				docs.addAll(hm);
 		}
 		
-		if (buscarLvL) {
+		if (buscarLvL && esPlanta2000) {
 			Documento lvl = listaValoresLimitesService.documentoPara(c);
 			if (lvl != null)
 				docs.add(lvl);
 		}
 
-		if (buscarMkb) {
+		if (buscarMkb && !esPlanta2000) {
 		    Documento mkb = mkbServise.documentoPara(c);
 		    if (mkb != null)
 		        docs.add(mkb);
         }
 
-        if (buscarAsk) {
+        if (buscarAsk && !esPlanta2000) {
             Documento ask = askService.documentoPara(c);
             if (ask != null)
                 docs.add(ask);
         }
 
-        if (buscarPcf) {
+        if (buscarPcf && !esPlanta2000) {
 		    List<Documento> pcf = planoCodFunService.documentoPara(c);
 		    if (pcf != null)
 		        docs.addAll(pcf);
