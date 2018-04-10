@@ -21,8 +21,7 @@ public class MainController {
 	private boolean buscarHisto;
 	private boolean buscarHdM;
 	private boolean buscarLvL;
-	private boolean buscarMkb;
-    private boolean buscarAsk;
+    private boolean buscarMkbAsk;
 	private boolean buscarPcf;
 	
 	public MainController() {
@@ -41,7 +40,7 @@ public class MainController {
 		try {
 			Long numOt = Long.parseLong(c);
 
-			if (buscarLyp || buscarHisto || buscarHdM || buscarLvL || buscarMkb || buscarAsk || buscarPcf) {
+            if (buscarLyp || buscarHisto || buscarHdM || buscarLvL || buscarMkbAsk || buscarPcf) {
 				LverYPacc lyp = ifsService.lverYPaccPara(numOt);
 
 				if (lyp != null) {
@@ -78,16 +77,16 @@ public class MainController {
 				docs.add(lvl);
 		}
 
-		if (buscarMkb && !esPlanta2000) {
-		    Documento mkb = mkbServise.documentoPara(c);
-		    if (mkb != null)
-		        docs.add(mkb);
-        }
+        if (buscarMkbAsk && !esPlanta2000) {
+            Documento mkb = mkbServise.documentoPara(c);
 
-        if (buscarAsk && !esPlanta2000) {
-            Documento ask = askService.documentoPara(c);
-            if (ask != null)
-                docs.add(ask);
+            if (mkb != null)
+                docs.add(mkb);
+            else {
+                Documento ask = askService.documentoPara(c);
+                if (ask != null)
+                    docs.add(ask);
+            }
         }
 
         if (buscarPcf && !esPlanta2000) {
@@ -135,14 +134,6 @@ public class MainController {
 		this.buscarLvL = buscarLvL;
 	}
 
-	public boolean isBuscarMkb() {
-	    return buscarMkb;
-    }
-
-    public void setBuscarMkb(boolean buscarMkb) {
-	    this.buscarMkb = buscarMkb;
-    }
-
     public boolean isBuscarPcf() {
         return buscarPcf;
     }
@@ -151,12 +142,12 @@ public class MainController {
         this.buscarPcf = buscarPcf;
     }
 
-    public boolean isBuscarAsk() {
-        return buscarAsk;
+    public boolean isBuscarMkbAsk() {
+        return buscarMkbAsk;
     }
 
-    public void setBuscarAsk(boolean buscarAsk) {
-        this.buscarAsk = buscarAsk;
+    public void setBuscarMkbAsk(boolean buscarMkbAsk) {
+        this.buscarMkbAsk = buscarMkbAsk;
     }
 
     public void setBuscarTodo(boolean value) {
@@ -164,8 +155,7 @@ public class MainController {
 		this.buscarHdM = value;
 		this.buscarHisto = value;
 		this.buscarLvL = value;
-		this.buscarMkb = value;
-		this.buscarAsk = value;
+        this.buscarMkbAsk = value;
 		this.buscarPcf = value;
 
 	}

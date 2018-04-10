@@ -1,33 +1,17 @@
 package ar.nasa.view;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
-
 import ar.nasa.controller.MainController;
 import ar.nasa.domain.Documento;
 import ar.nasa.domain.Grupo;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.CheckBoxTreeItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
+import javafx.scene.image.Image;
 import javafx.scene.input.Clipboard;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -35,6 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.util.*;
 
 public class MainView {
 
@@ -55,8 +42,7 @@ public class MainView {
     private CheckBox checkHisto;
     private CheckBox checkHdM;
     private CheckBox checkLvL;
-    private CheckBox checkMkb;
-    private CheckBox checkAsk;
+    private CheckBox checkMkbAsk;
     private CheckBox checkPcf;
 
     public MainView(Stage primaryStage) {
@@ -72,6 +58,7 @@ public class MainView {
 
         Scene scene = new Scene(vbox);
         stage.setScene(scene);
+        stage.getIcons().add(new Image("documentation.png"));
         stage.show();
     }
 
@@ -86,7 +73,7 @@ public class MainView {
             public void paste() {
                 Clipboard clipboard = Clipboard.getSystemClipboard();
                 String text = this.getText();
-                text += (text.endsWith(";")) ? "" : ";";
+                text += (text.equals("") || text.endsWith(";")) ? "" : ";";
                 text += clipboard.getString()
                         .replaceAll("\n", ";")
                         .replaceAll("\r\n", ";")
@@ -110,14 +97,20 @@ public class MainView {
     }
 
     private HBox boxOpciones() {
-        checkTodo = new CheckBox("Todo");
+        checkTodo = new CheckBox("_TODO");
+
         checkLyP = new CheckBox("LVer PAcc");
         checkHisto = new CheckBox("Historial");
+        VBox vBoxA = new VBox(checkLyP, checkHisto);
+        vBoxA.setSpacing(10);
         checkHdM = new CheckBox("Hoja Medición");
         checkLvL = new CheckBox("Valores Limites");
-        checkMkb = new CheckBox("Mkb");
-        checkAsk = new CheckBox("Ask");
+        VBox vBoxB = new VBox(checkHdM, checkLvL);
+        vBoxB.setSpacing(10);
+        checkMkbAsk = new CheckBox("Mkb/Ask");
         checkPcf = new CheckBox("Planos");
+        VBox vBoxC = new VBox(checkMkbAsk, checkPcf);
+        vBoxC.setSpacing(10);
 
         checkTodo(true);
 
@@ -139,22 +132,18 @@ public class MainView {
             checkOpcion(newValue);
             controller.setBuscarLvL(newValue);
         });
-        checkMkb.selectedProperty().addListener((obj, oldValue, newValue) -> {
+        checkMkbAsk.selectedProperty().addListener((obj, oldValue, newValue) -> {
             checkOpcion(newValue);
-            controller.setBuscarMkb(newValue);
-        });
-        checkAsk.selectedProperty().addListener((obj, oldValue, newValue) -> {
-            checkOpcion(newValue);
-            controller.setBuscarAsk(newValue);
+            controller.setBuscarMkbAsk(newValue);
         });
         checkPcf.selectedProperty().addListener((obj, oldValue, newValue) -> {
             checkOpcion(newValue);
             controller.setBuscarPcf(newValue);
         });
 
-        HBox hboxOpciones = new HBox(checkTodo, checkLyP, checkHisto, checkHdM, checkLvL, checkMkb, checkAsk, checkPcf);
+        HBox hboxOpciones = new HBox(checkTodo, vBoxA, vBoxB, vBoxC);
         hboxOpciones.setPadding(new Insets(0,0,15,0));
-        hboxOpciones.setSpacing(10);
+        hboxOpciones.setSpacing(30);
         hboxOpciones.setAlignment(Pos.CENTER);
 
         return hboxOpciones;
@@ -168,8 +157,7 @@ public class MainView {
         checkHisto.setSelected(value);
         checkHdM.setSelected(value);
         checkLvL.setSelected(value);
-        checkMkb.setSelected(value);
-        checkAsk.setSelected(value);
+        checkMkbAsk.setSelected(value);
         checkPcf.setSelected(value);
     }
 
@@ -185,8 +173,7 @@ public class MainView {
                 && checkHisto.isSelected()
                 && checkHdM.isSelected()
                 && checkLvL.isSelected()
-                && checkMkb.isSelected()
-                && checkAsk.isSelected()
+                && checkMkbAsk.isSelected()
                 && checkPcf.isSelected();
     }
 
@@ -197,6 +184,13 @@ public class MainView {
         textDestino.setDisable(valor);
         botonDestino.setDisable(valor);
         botonDescargar.setDisable(valor);
+        checkTodo.setDisable(valor);
+        checkLyP.setDisable(valor);
+        checkHisto.setDisable(valor);
+        checkHdM.setDisable(valor);
+        checkLvL.setDisable(valor);
+        checkMkbAsk.setDisable(valor);
+        checkPcf.setDisable(valor);
 
         if (valor)
             stage.getScene().setCursor(Cursor.WAIT);
@@ -249,13 +243,14 @@ public class MainView {
 
                     stringInfo = "Buscando documentación de " + c + " [ " + ++vuelta + " / " + listaBuscar.size() +" ]";
                     Platform.runLater(() -> textInfo.setText(stringInfo));
-                    updateProgress(vuelta, listaBuscar.size() + 1);
 
                     List<Documento> docs = controller.documentosPara(c);
 
+                    updateProgress(vuelta, listaBuscar.size() + 1);
+
                     if (!docs.isEmpty()) {
                         count += docs.size();
-                        CheckBoxTreeItem<Documento> treeItem = new CheckBoxTreeItem<>(new Grupo(c));
+                        CheckBoxTreeItem<Documento> treeItem = new CheckBoxTreeItem<>(new Grupo(c.toUpperCase()));
 
                         for (Documento d: docs)
                             treeItem.getChildren().add(new CheckBoxTreeItem<>(d));

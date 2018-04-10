@@ -16,10 +16,10 @@ import fr.opensagres.xdocreport.template.TemplateEngineKind;
 public class LverYPacc extends Documento {
 	
 	private OtActivaIfs ot;
-	public static IXDocReport REPORT_LVER;
-	public static IXDocReport REPORT_PACC;
+	private static IXDocReport REPORT_LVER;
+	private static IXDocReport REPORT_PACC;
 	
-	public LverYPacc(OtActivaIfs ot) {
+	LverYPacc(OtActivaIfs ot) {
 		try {
 			REPORT_LVER = XDocReportRegistry.getRegistry().loadReport(
 					ListaValoresLimites.class.getResourceAsStream("/lver.velocity.docx"), 
@@ -45,8 +45,10 @@ public class LverYPacc extends Documento {
 			
 			IContext context_lver = REPORT_LVER.createContext();
 			context_lver.put("ot", ot);
+			context_lver.put("user", getUser());
 			IContext context_pacc = REPORT_PACC.createContext();
 			context_pacc.put("ot", ot);
+			context_pacc.put("user", getUser());
 		
 			REPORT_LVER.process(context_lver, out_lver);
 			REPORT_PACC.process(context_pacc, out_pacc);
@@ -64,6 +66,71 @@ public class LverYPacc extends Documento {
 			+ " " + ot.getDirectiva();
 	}
 
+	private User getUser() {
+	    User user = new User();
+
+        if (this.ot.getPlanifica() != null) {
+            switch (this.ot.getPlanifica()) {
+                case "MAPARODI":
+                    user.setNombre("Marcos");
+                    user.setApellido("Parodi");
+                    break;
+                case "MSOTTILE":
+                    user.setNombre("Maximiliano");
+                    user.setApellido("Sottile");
+                    break;
+                case "POCARANZA":
+                    user.setNombre("Pablo");
+                    user.setApellido("Ocaranza");
+                    break;
+                case "NARDISSON":
+                    user.setNombre("Norberto");
+                    user.setApellido("Ardisson");
+                    break;
+                case "FBIJAN":
+                    user.setNombre("Facundo");
+                    user.setApellido("Bijan");
+                    break;
+                case "HBRAVO":
+                    user.setNombre("Hugo");
+                    user.setApellido("Bravo");
+                    break;
+            }
+        } else {
+            switch (System.getProperty("user.name")) {
+                case "mparodi":
+                    user.setNombre("Marcos");
+                    user.setApellido("Parodi");
+                    break;
+                case "msottile":
+                    user.setNombre("Maximiliano");
+                    user.setApellido("Sottile");
+                    break;
+                case "pocaranza":
+                    user.setNombre("Pablo");
+                    user.setApellido("Ocaranza");
+                    break;
+                case "nardisson":
+                    user.setNombre("Norberto");
+                    user.setApellido("Ardisson");
+                    break;
+                case "fbijan":
+                    user.setNombre("Facundo");
+                    user.setApellido("Bijan");
+                    break;
+                case "hbravo":
+                    user.setNombre("Hugo");
+                    user.setApellido("Bravo");
+                    break;
+                default:
+                    user.setNombre("");
+                    user.setApellido("");
+            }
+        }
+
+        return user;
+    }
+
 	public OtActivaIfs getOt() {
 		return ot;
 	}
@@ -72,4 +139,25 @@ public class LverYPacc extends Documento {
 		this.ot = ot;
 	}
 
+    public class User {
+	    String nombre;
+	    String apellido;
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public String getApellido() {
+            return apellido;
+        }
+
+        void setApellido(String apellido) {
+            this.apellido = apellido;
+        }
+
+    }
 }
