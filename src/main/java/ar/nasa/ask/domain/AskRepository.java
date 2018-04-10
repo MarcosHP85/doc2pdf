@@ -10,7 +10,7 @@ public class AskRepository {
     private EntityManagerFactory sessionFactory;
 
     public AskRepository() {
-        sessionFactory = Persistence.createEntityManagerFactory("mysql.mkb");
+        sessionFactory = Persistence.createEntityManagerFactory("mysql.ask");
     }
 
     public Ask findBy(String c) {

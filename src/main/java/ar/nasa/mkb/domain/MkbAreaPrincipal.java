@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "mkb.area_principal")
+@Table(name = "area_principal")
 public class MkbAreaPrincipal {
 
     private Integer id;
@@ -13,7 +13,7 @@ public class MkbAreaPrincipal {
     private String kks2;
 
     @Id
-    public Integer getId() {
+    Integer getId() {
         return id;
     }
 
@@ -21,7 +21,7 @@ public class MkbAreaPrincipal {
         this.id = id;
     }
 
-    public String getKks() {
+    String getKks() {
         return kks;
     }
 
@@ -29,7 +29,7 @@ public class MkbAreaPrincipal {
         this.kks = kks;
     }
 
-    public String getKks2() {
+    String getKks2() {
         return kks2;
     }
 

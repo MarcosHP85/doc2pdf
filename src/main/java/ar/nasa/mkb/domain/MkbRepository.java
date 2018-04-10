@@ -18,7 +18,7 @@ public class MkbRepository {
         EntityManager entityManager = sessionFactory.createEntityManager();
 
         List<MkbAreaPrincipal> mkbAreaPrincipals = entityManager
-                .createQuery("FROM AskAreaPrincipal a WHERE a.kks = :c", MkbAreaPrincipal.class)
+                .createQuery("FROM MkbAreaPrincipal a WHERE a.kks = :c", MkbAreaPrincipal.class)
                 .setParameter("c", c)
                 .getResultList();
 

@@ -25,17 +25,25 @@
 		</properties>
 	</persistence-unit>
 	<persistence-unit name="mysql.mkb">
-		<class>ar.nasa.lvl.domain.Valor</class>
+		<class>ar.nasa.mkb.domain.Mkb</class>
 		<properties>
-			<property name="hibernate.connection.url" value="jdbc:mysql://doccnaii:3306/"/>
+			<property name="hibernate.connection.url" value="jdbc:mysql://doccnaii:3306/mkb"/>
 			<property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="hibernate.connection.username" value="visor"/>
 			<property name="hibernate.connection.password" value="visor"/>
-			<property name="hibernate.show_sql" value="true"/>
-			<property name="hibernate.format_sql" value="true"/>
 		</properties>
 	</persistence-unit>
+    <persistence-unit name="mysql.ask">
+        <class>ar.nasa.mkb.domain.Ask</class>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:mysql://doccnaii:3306/ask"/>
+            <property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.connection.username" value="visor"/>
+            <property name="hibernate.connection.password" value="visor"/>
+        </properties>
+    </persistence-unit>
 	
 	<persistence-unit name="mysql.ifs">
 	    <class>ar.nasa.ifs.domain.OtActivaIfs</class>
