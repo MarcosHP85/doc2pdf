@@ -73,14 +73,20 @@ public class MainView {
             public void paste() {
                 Clipboard clipboard = Clipboard.getSystemClipboard();
                 String text = this.getText();
-                text += (text.equals("") || text.endsWith(";")) ? "" : ";";
-                text += clipboard.getString()
+                text += (this.getSelection().getStart() == text.length()
+                        && !text.equals("")
+                        && !text.endsWith(";")) ? ";" : "";
+
+                String pasteText = clipboard.getString()
                         .replaceAll("\n", ";")
                         .replaceAll("\r\n", ";")
                         .replaceAll(",", ";");
 
-                this.setText(text);
-                this.positionCaret(this.getLength());
+                int inicio = this.getSelection().getStart();
+                this.setText(text.substring(0, inicio)
+                        + pasteText
+                        + text.substring(this.getSelection().getEnd(), text.length()));
+                this.positionCaret(inicio + pasteText.length());
             }
         };
         textBuscar.setOnAction(event -> actionBuscar());
