@@ -73,20 +73,30 @@ public class LverYPacc extends Documento {
 	}
 
 	public void extraerInfo(Documento documento) {
-	    if (documento instanceof Ask)
+	    if (documento instanceof Ask) {
+            index.setsMedicion(index.getsMedicion() + "Ask ");
             index.setMedicion(true);
+        }
 
-	    if (documento instanceof HojaDeMedicion)
-	        index.setMedicion(true);
+	    if (documento instanceof HojaDeMedicion) {
+            index.setsMedicion(index.getsMedicion() + "HdM ");
+            index.setMedicion(true);
+        }
 
-	    if (documento instanceof ListaValoresLimites)
-	        index.setMedicion(true);
+	    if (documento instanceof ListaValoresLimites) {
+            index.setsMedicion(index.getsMedicion() + "LvL ");
+            index.setMedicion(true);
+        }
 
-	    if (documento instanceof Mkb)
-	        index.setMedicion(true);
+	    if (documento instanceof Mkb) {
+            index.setsMedicion(index.getsMedicion() + "Mkb ");
+            index.setMedicion(true);
+        }
 
-	    if (documento instanceof PlanoCodFun)
-	        index.setPlanos(true);
+	    if (documento instanceof PlanoCodFun) {
+	        index.setsPlanos(documento.toString());
+            index.setPlanos(true);
+        }
 
 	    if (documento instanceof Historial)
 	        index.setHistorial(true);
@@ -190,6 +200,24 @@ public class LverYPacc extends Documento {
 	    boolean historial;
 	    boolean planos;
 	    boolean medicion;
+	    String sPlanos = "";
+	    String sMedicion = "";
+
+        public String getsPlanos() {
+            return sPlanos;
+        }
+
+        void setsPlanos(String sPlanos) {
+            this.sPlanos = sPlanos;
+        }
+
+        String getsMedicion() {
+            return sMedicion;
+        }
+
+        void setsMedicion(String sMedicion) {
+            this.sMedicion = sMedicion;
+        }
 
         public boolean isPlanos() {
             return planos;
