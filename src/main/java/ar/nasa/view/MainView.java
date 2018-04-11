@@ -3,6 +3,7 @@ package ar.nasa.view;
 import ar.nasa.controller.MainController;
 import ar.nasa.domain.Documento;
 import ar.nasa.domain.Grupo;
+import ar.nasa.ifs.domain.LverYPacc;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
@@ -370,11 +371,19 @@ public class MainView {
                 Integer total = 0;
                 for (TreeItem<Documento> comp: tree.getRoot().getChildren()) {
                     List<Documento> tmp = new ArrayList<>();
+                    LverYPacc documentoLyP = null;
 
                     for (TreeItem<Documento> d: comp.getChildren()) {
 
+                        if (d.getValue() instanceof LverYPacc)
+                            documentoLyP = (LverYPacc) d.getValue();
+
                         if (((CheckBoxTreeItem<Documento>)d).isSelected()) {
                             tmp.add(d.getValue());
+
+                            if (documentoLyP != null)
+                                documentoLyP.extraerInfo(d.getValue());
+
                             total++;
                         }
 

@@ -1,21 +1,26 @@
 package ar.nasa.ifs.domain;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
+import ar.nasa.ask.domain.Ask;
 import ar.nasa.domain.Documento;
+import ar.nasa.hm.domain.HojaDeMedicion;
 import ar.nasa.lvl.domain.ListaValoresLimites;
+import ar.nasa.mkb.domain.Mkb;
+import ar.nasa.pcf.domain.PlanoCodFun;
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.document.IXDocReport;
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
 import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 
 public class LverYPacc extends Documento {
 	
 	private OtActivaIfs ot;
+	private IndexLver index = new IndexLver();
 	private static IXDocReport REPORT_LVER;
 	private static IXDocReport REPORT_PACC;
 	
@@ -46,6 +51,7 @@ public class LverYPacc extends Documento {
 			IContext context_lver = REPORT_LVER.createContext();
 			context_lver.put("ot", ot);
 			context_lver.put("user", getUser());
+			context_lver.put("i", index);
 			IContext context_pacc = REPORT_PACC.createContext();
 			context_pacc.put("ot", ot);
 			context_pacc.put("user", getUser());
@@ -65,6 +71,26 @@ public class LverYPacc extends Documento {
 			+ " " + ot.getTipoTrabajo()
 			+ " " + ot.getDirectiva();
 	}
+
+	public void extraerInfo(Documento documento) {
+	    if (documento instanceof Ask)
+            index.setMedicion(true);
+
+	    if (documento instanceof HojaDeMedicion)
+	        index.setMedicion(true);
+
+	    if (documento instanceof ListaValoresLimites)
+	        index.setMedicion(true);
+
+	    if (documento instanceof Mkb)
+	        index.setMedicion(true);
+
+	    if (documento instanceof PlanoCodFun)
+	        index.setPlanos(true);
+
+	    if (documento instanceof Historial)
+	        index.setHistorial(true);
+    }
 
 	private User getUser() {
 	    User user = new User();
@@ -158,6 +184,41 @@ public class LverYPacc extends Documento {
         void setApellido(String apellido) {
             this.apellido = apellido;
         }
+    }
 
+    public class IndexLver {
+	    boolean historial;
+	    boolean planos;
+	    boolean medicion;
+
+        public boolean isPlanos() {
+            return planos;
+        }
+
+        void setPlanos(boolean planos) {
+            this.planos = planos;
+        }
+
+        public boolean isMedicion() {
+            return medicion;
+        }
+
+        void setMedicion(boolean medicion) {
+            this.medicion = medicion;
+        }
+
+        public boolean isHistorial() {
+            return historial;
+        }
+
+        void setHistorial(boolean historial) {
+            this.historial = historial;
+        }
+
+        IndexLver() {
+            this.historial = false;
+            this.planos = false;
+            this.medicion = false;
+        }
     }
 }
