@@ -90,6 +90,7 @@ public class MainView {
                 this.positionCaret(inicio + pasteText.length());
             }
         };
+        textBuscar.textProperty().addListener((ov, oldValue, newValue) -> textBuscar.setText(newValue.toUpperCase()));
         textBuscar.setOnAction(event -> actionBuscar());
 
         HBox hboxBuscar = new HBox(new Label("OT/Comp:"), textBuscar, botonBuscar);
@@ -257,7 +258,16 @@ public class MainView {
 
                     if (!docs.isEmpty()) {
                         count += docs.size();
-                        CheckBoxTreeItem<Documento> treeItem = new CheckBoxTreeItem<>(new Grupo(c.toUpperCase()));
+
+                        String name = c.toUpperCase();
+                        if (docs.get(0) instanceof LverYPacc) {
+                            LverYPacc lverYPacc = (LverYPacc) docs.get(0);
+                            name = lverYPacc.getOt().getComponente().getMchCode()
+                                    + "-" + lverYPacc.getOt().getTipoTrabajo()
+                                    + "-" + lverYPacc.getOt().getOrganizacion().getOrgCode()
+                                    + " " + lverYPacc.getOt().getDirectiva();
+                        }
+                        CheckBoxTreeItem<Documento> treeItem = new CheckBoxTreeItem<>(new Grupo(name));
 
                         for (Documento d: docs)
                             treeItem.getChildren().add(new CheckBoxTreeItem<>(d));
@@ -371,12 +381,10 @@ public class MainView {
                 Integer total = 0;
                 for (TreeItem<Documento> comp: tree.getRoot().getChildren()) {
                     List<Documento> tmp = new ArrayList<>();
-                    LverYPacc documentoLyP = null;
+                    LverYPacc documentoLyP = (comp.getChildren().get(0).getValue() instanceof LverYPacc)
+                            ? (LverYPacc) comp.getChildren().get(0).getValue() : null;
 
                     for (TreeItem<Documento> d: comp.getChildren()) {
-
-                        if (d.getValue() instanceof LverYPacc)
-                            documentoLyP = (LverYPacc) d.getValue();
 
                         if (((CheckBoxTreeItem<Documento>)d).isSelected()) {
                             tmp.add(d.getValue());
@@ -388,15 +396,16 @@ public class MainView {
                         }
 
                         if (!tmp.isEmpty())
-                            arbol.put(comp.getValue().toString().toUpperCase(), tmp);
+                            arbol.put(comp.getValue().toString(), tmp);
                     }
                 }
 
                 Integer count = 0;
                 for (String key: arbol.keySet()) {
-                    File carpeta = new File((arbol.keySet().size() > 1)
-                            ? textDestino.getText() + File.separatorChar + key
-                            : textDestino.getText());
+
+                    File carpeta = new File(textDestino.getText());
+                    if (!carpeta.getName().startsWith(key.split("-")[0]))
+                        carpeta = new File(textDestino.getText() + File.separatorChar + key);
 
                     if (!carpeta.isDirectory())
                         if (!carpeta.mkdirs()) break;

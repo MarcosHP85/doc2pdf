@@ -66,7 +66,7 @@ public class LverYPacc extends Documento {
 
 	@Override
 	public String toString() {
-		return "LVer/PAcc: " + ot.getNumOt() 
+		return "LVer PAcc: " + ot.getNumOt()
 			+ " " + ot.getOrganizacion().getOrgCode()
 			+ " " + ot.getTipoTrabajo()
 			+ " " + ot.getDirectiva();
@@ -74,27 +74,27 @@ public class LverYPacc extends Documento {
 
 	public void extraerInfo(Documento documento) {
 	    if (documento instanceof Ask) {
-            index.setsMedicion(index.getsMedicion() + "Ask ");
+            index.setsMedicion(index.sMedicion + "Ask ");
             index.setMedicion(true);
         }
 
 	    if (documento instanceof HojaDeMedicion) {
-            index.setsMedicion(index.getsMedicion() + "HdM ");
+            index.setsMedicion(index.sMedicion + "HdM ");
             index.setMedicion(true);
         }
 
 	    if (documento instanceof ListaValoresLimites) {
-            index.setsMedicion(index.getsMedicion() + "LvL ");
+            index.setsMedicion(index.sMedicion + "LvL ");
             index.setMedicion(true);
         }
 
 	    if (documento instanceof Mkb) {
-            index.setsMedicion(index.getsMedicion() + "Mkb ");
+            index.setsMedicion(index.sMedicion + "Mkb ");
             index.setMedicion(true);
         }
 
 	    if (documento instanceof PlanoCodFun) {
-	        index.setsPlanos(documento.toString());
+	        index.setsPlanos(index.sPlanos + documento.toString() + "\n");
             index.setPlanos(true);
         }
 
@@ -204,15 +204,15 @@ public class LverYPacc extends Documento {
 	    String sMedicion = "";
 
         public String getsPlanos() {
-            return sPlanos;
+            return sPlanos.equals("") ? "" : sPlanos.substring(0, sPlanos.length() - 1);
         }
 
         void setsPlanos(String sPlanos) {
             this.sPlanos = sPlanos;
         }
 
-        String getsMedicion() {
-            return sMedicion;
+        public String getsMedicion() {
+            return sMedicion.equals("") ? "" : sMedicion.substring(0, sMedicion.length() - 1);
         }
 
         void setsMedicion(String sMedicion) {
