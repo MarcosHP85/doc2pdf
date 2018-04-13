@@ -405,7 +405,7 @@ public class MainView {
 
                     File carpeta = new File(textDestino.getText());
                     if (!carpeta.getName().startsWith(key.split("-")[0]))
-                        carpeta = new File(textDestino.getText() + File.separatorChar + key);
+                        carpeta = new File(textDestino.getText() + File.separatorChar + key.replaceAll("/", ", "));
 
                     if (!carpeta.isDirectory())
                         if (!carpeta.mkdirs()) break;
