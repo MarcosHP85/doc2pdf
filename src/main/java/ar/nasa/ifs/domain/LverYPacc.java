@@ -58,6 +58,8 @@ public class LverYPacc extends Documento {
 		
 			REPORT_LVER.process(context_lver, out_lver);
 			REPORT_PACC.process(context_pacc, out_pacc);
+
+			index = new IndexLver();
 			
 		} catch (XDocReportException | IOException e) {
 			e.printStackTrace();
