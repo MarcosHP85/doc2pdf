@@ -14,6 +14,12 @@ public class MkbServise {
         return (mkb.getMkbAreaPrincipals().isEmpty()) ? null : mkb;
     }
 
+    public Documento documentoParaComponente(String c) {
+        Mkb mkb = getMkbRepository().findByComponente(c);
+
+        return (mkb.getMkbAreaPrincipals().isEmpty()) ? null : mkb;
+    }
+
     private MkbRepository getMkbRepository() {
         if (mkbRepository == null)
             mkbRepository = new MkbRepository();

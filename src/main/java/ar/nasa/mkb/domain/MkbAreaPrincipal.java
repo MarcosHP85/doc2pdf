@@ -11,6 +11,7 @@ public class MkbAreaPrincipal {
     private Integer id;
     private String kks;
     private String kks2;
+    private String componente;
 
     @Id
     Integer getId() {
@@ -35,5 +36,13 @@ public class MkbAreaPrincipal {
 
     public void setKks2(String kks2) {
         this.kks2 = kks2;
+    }
+
+    String getComponente() {
+        return componente;
+    }
+
+    public void setComponente(String componente) {
+        this.componente = componente;
     }
 }

@@ -86,6 +86,10 @@ public class MainController {
                 Documento ask = askService.documentoPara(c);
                 if (ask != null)
                     docs.add(ask);
+
+                mkb = mkbServise.documentoParaComponente(c);
+                if (mkb != null)
+                    docs.add(mkb);
             }
         }
 

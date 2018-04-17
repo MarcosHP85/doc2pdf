@@ -27,6 +27,20 @@ public class MkbRepository {
         return new Mkb(mkbAreaPrincipals);
     }
 
+    public Mkb findByComponente(String c) {
+
+        EntityManager entityManager = sessionFactory.createEntityManager();
+
+        List<MkbAreaPrincipal> mkbAreaPrincipals = entityManager
+                .createQuery("FROM MkbAreaPrincipal a WHERE a.componente = :c", MkbAreaPrincipal.class)
+                .setParameter("c", c)
+                .getResultList();
+
+        entityManager.close();
+
+        return new Mkb(mkbAreaPrincipals);
+    }
+
     public void close() {
         if (sessionFactory != null)
             sessionFactory.close();
