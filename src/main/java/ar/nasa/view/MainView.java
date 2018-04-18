@@ -244,7 +244,7 @@ public class MainView {
                         new CheckBoxTreeItem<>(new Grupo("Todo"));
 
                 TreeSet<String> listaBuscar = new TreeSet<>(Arrays.asList(textBuscar.getText().split(";")));
-                listaBuscar.removeIf(s -> s.length() < 5);
+                listaBuscar.removeIf(s -> s.length() < 4);
 
                 Integer vuelta = 0;
                 for (String c: listaBuscar) {

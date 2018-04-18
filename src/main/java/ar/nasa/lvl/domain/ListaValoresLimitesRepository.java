@@ -24,12 +24,10 @@ public class ListaValoresLimitesRepository {
 		
 		Pattern p = Pattern.compile("(\\w{2})(\\d{2,3})(\\w?.*)");
 		Matcher m = p.matcher(c);
-		m.find();
-		
-		String identificacion = (m.group(1) 
-				+ ((m.group(2).length() < 3) ? "0" : "") 
-				+ m.group(2) + " " + m.group(3)).toUpperCase();
-		
+        String identificacion = m.find()
+                ? (m.group(1) + ((m.group(2).length() < 3) ? "0" : "") + m.group(2) + " " + m.group(3)).toUpperCase()
+                : c;
+
 		EntityManager entityManager = sessionFactory.createEntityManager();
 		
 		List<Valor> valores = entityManager
