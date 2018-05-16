@@ -125,11 +125,11 @@ public class LverYPacc extends Documento {
                     user.setNombre("Norberto");
                     user.setApellido("Ardisson");
                     break;
-                case "FBIJAN":
+                case "22156":
                     user.setNombre("Facundo");
                     user.setApellido("Bijan");
                     break;
-                case "HBRAVO":
+                case "20709":
                     user.setNombre("Hugo");
                     user.setApellido("Bravo");
                     break;
