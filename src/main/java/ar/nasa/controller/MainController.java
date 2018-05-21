@@ -52,7 +52,7 @@ public class MainController {
                 }
 			}
 		} catch(NumberFormatException e) {
-		    Pattern p = Pattern.compile("\\w{3}\\d{2}\\w{2}.{3,}");
+		    Pattern p = Pattern.compile("\\w{3}\\d{2}.+"); // ("\\w{3}\\d{2}\\w{2}.{3,}");
             Matcher m = p.matcher(c);
 
             if (m.find())
