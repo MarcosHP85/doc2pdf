@@ -44,10 +44,16 @@ public class Historial extends Documento {
 			FileOutputStream out = new FileOutputStream(carpeta + File.separatorChar + "HISTO IFS " + busqueda + ".pdf");
 
 			IContext context = REPORT.createContext();
+
+			// Hardcodeo
 			for (OtIfsHistorica ot : ots) {
 				if (ot.getTrabajoRealizado() == null)
 					ot.setTrabajoRealizado("---");
+
+				if (ot.getTrabajoRealizado().endsWith("\n"))
+				    ot.setTrabajoRealizado(ot.getTrabajoRealizado() + "\n");
 			}
+
 			context.put("ots", ots);
 			context.put("busqueda", busqueda);
 			
