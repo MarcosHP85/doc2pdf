@@ -1,11 +1,10 @@
 package ar.nasa.ifs.domain;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "HISTORICAL_SEPARATE_OVERVIEW", schema = "IFSATA", catalog = "IFSATA")
@@ -28,10 +27,11 @@ public class OtIfsHistorica {
 	private String realizadoPor;
 	private Date fechaInicio;
 	private Date fechaFin;
+	private String woStatusId;
 
 	@Id
 	@Column(name = "WO_NO")
-	public Integer getOtId() {
+	Integer getOtId() {
 		return otId;
 	}
 	public void setOtId(Integer numOt) {
@@ -135,10 +135,10 @@ public class OtIfsHistorica {
 	}
 	
 	@Column(name = "PERFORMED_ACTION_LO")
-	public String getTrabajoRealizado() {
+	String getTrabajoRealizado() {
 		return trabajoRealizado;
 	}
-	public void setTrabajoRealizado(String trabajoRealizado) {
+	void setTrabajoRealizado(String trabajoRealizado) {
 		this.trabajoRealizado = trabajoRealizado;
 	}
 	
@@ -159,21 +159,42 @@ public class OtIfsHistorica {
 	}
 	
 	@Column(name = "REAL_F_DATE")
-	public Date getFechaFin() {
+	Date getFechaFin() {
 		return fechaFin;
 	}
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
-	
-	@Override
-	public String toString() {
-		return "OtIfsHistorica [otId=" + otId + ", semanaPlan=" + semanaPlan + ", plantaOt=" + plantaOt + ", orgMant="
-				+ orgMant + ", otMadre=" + otMadre + ", componente=" + componente + ", tarea=" + tarea + ", posicion="
-				+ posicion + ", planifica=" + planifica + ", requierePaqTrabajo=" + requierePaqTrabajo + ", respTarea="
-				+ respTarea + ", tipoTrabajo=" + tipoTrabajo + ", prioridad=" + prioridad + ", trabajoRealizado="
-				+ trabajoRealizado + ", realizadoPor=" + realizadoPor + ", fechaInicio=" + fechaInicio + ", fechaFin="
-				+ fechaFin + "]";
-	}
 
+    @Column(name = "WO_STATUS_ID")
+    public String getWoStatusId() {
+        return woStatusId;
+    }
+    public void setWoStatusId(String woStatusId) {
+        this.woStatusId = woStatusId;
+    }
+
+    @Override
+    public String toString() {
+        return "OtIfsHistorica{" +
+                "otId=" + otId +
+                ", semanaPlan='" + semanaPlan + '\'' +
+                ", plantaOt=" + plantaOt +
+                ", orgMant='" + orgMant + '\'' +
+                ", otMadre='" + otMadre + '\'' +
+                ", componente='" + componente + '\'' +
+                ", tarea='" + tarea + '\'' +
+                ", posicion='" + posicion + '\'' +
+                ", planifica='" + planifica + '\'' +
+                ", requierePaqTrabajo='" + requierePaqTrabajo + '\'' +
+                ", respTarea='" + respTarea + '\'' +
+                ", tipoTrabajo='" + tipoTrabajo + '\'' +
+                ", prioridad=" + prioridad +
+                ", trabajoRealizado='" + trabajoRealizado + '\'' +
+                ", realizadoPor='" + realizadoPor + '\'' +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", woStatusId='" + woStatusId + '\'' +
+                '}';
+    }
 }

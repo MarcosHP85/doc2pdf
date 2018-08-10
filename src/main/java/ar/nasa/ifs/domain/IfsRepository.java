@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 public class IfsRepository {
@@ -18,10 +19,15 @@ public class IfsRepository {
 	public LverYPacc findLverYPaccBy(Long numOt) {
 		
 		EntityManager entityManager = sessionFactory.createEntityManager();
-		
-		OtActivaIfs ot = entityManager.createQuery("FROM OtActivaIfs o WHERE o.numOt = :n", OtActivaIfs.class)
-				.setParameter("n", numOt)
-				.getSingleResult();
+		OtActivaIfs ot;
+
+		try {
+			ot = entityManager.createQuery("FROM OtActivaIfs o WHERE o.numOt = :n", OtActivaIfs.class)
+					.setParameter("n", numOt)
+					.getSingleResult();
+		} catch (NoResultException e) {
+			ot = null;
+		}
 		
 		entityManager.close();
 		
