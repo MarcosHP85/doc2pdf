@@ -10,8 +10,8 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
 			<property name="hibernate.connection.username" value="IFSATA"/>
 			<property name="hibernate.connection.password" value="ifscna1234"/>
-			<!-- <property name="hibernate.show_sql" value="true"/>
-			<property name="hibernate.format_sql" value="true"/> -->
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
 		</properties>
 	</persistence-unit>
 	<persistence-unit name="postgres.valoresLimites">
@@ -25,24 +25,52 @@
 		</properties>
 	</persistence-unit>
 	<persistence-unit name="mysql.mkb">
-		<class>ar.nasa.mkb.domain.Mkb</class>
+		<class>ar.nasa.mkb.domain.MkbAreaPrincipal</class>
+        <class>ar.nasa.mkb.domain.MkbAreaVariable</class>
 		<properties>
 			<property name="hibernate.connection.url" value="jdbc:mysql://doccnaii:3306/mkb"/>
 			<property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
 			<property name="hibernate.connection.username" value="visor"/>
 			<property name="hibernate.connection.password" value="visor"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
 		</properties>
 	</persistence-unit>
     <persistence-unit name="mysql.ask">
-        <class>ar.nasa.mkb.domain.Ask</class>
+        <class>ar.nasa.ask.domain.AskAreaPrincipal</class>
+		<class>ar.nasa.ask.domain.AskAreaPrincipal</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://doccnaii:3306/ask"/>
             <property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.connection.username" value="visor"/>
             <property name="hibernate.connection.password" value="visor"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
         </properties>
+    </persistence-unit>
+	<persistence-unit name="mysql.mesa">
+        <class>ar.nasa.mesa.domain.Mkb6</class>
+		<class>ar.nasa.mesa.domain.Mkb6oc</class>
+        <class>ar.nasa.mesa.domain.Ask6</class>
+        <class>ar.nasa.mesa.domain.Ask6c</class>
+        <!--<properties>-->
+            <!--<property name="hibernate.connection.url" value="jdbc:mysql://xp25/mesa"/>-->
+            <!--<property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>-->
+            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
+            <!--<property name="hibernate.connection.username" value="root"/>-->
+            <!--<property name="hibernate.connection.password" value="12345"/>-->
+            <!--<property name="hibernate.show_sql" value="true"/>-->
+			<!--<property name="hibernate.format_sql" value="true"/>-->
+        <!--</properties>-->
+		<properties>
+			<property name="hibernate.connection.url" value="jdbc:relique:csv:zip:lib/mesadb.zip?separator=;"/>
+			<property name="hibernate.connection.driver_class" value="org.relique.jdbc.csv.CsvDriver"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+		</properties>
     </persistence-unit>
 	
 	<persistence-unit name="mysql.ifs">
@@ -50,7 +78,7 @@
 		<properties>
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost/"/>
 			<property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
 			<property name="hibernate.connection.username" value="root"/>
 			<property name="hibernate.connection.password" value="12345"/>
 		</properties>
@@ -60,7 +88,7 @@
 		<properties>
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost/valores_limites"/>
 			<property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
 			<property name="hibernate.connection.username" value="root"/>
 			<property name="hibernate.connection.password" value="12345"/>
 		</properties>

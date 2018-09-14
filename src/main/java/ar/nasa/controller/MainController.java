@@ -14,7 +14,7 @@ public class MainController {
 	private HojaDeMedicionService hojaDeMedicionService;
 	private ListaValoresLimitesService listaValoresLimitesService;
 	private PlanoCodFunService planoCodFunService;
-	private MkbServise mkbServise;
+	private MkbService mkbServise;
 	private AskService askService;
 	private IfsService ifsService;
 	private boolean buscarLyp;
@@ -28,7 +28,7 @@ public class MainController {
 		hojaDeMedicionService = new HojaDeMedicionService();
 		listaValoresLimitesService = new ListaValoresLimitesService();
 		planoCodFunService = new PlanoCodFunService();
-		mkbServise = new MkbServise();
+		mkbServise = new MkbService();
 		askService = new AskService();
 		ifsService = new IfsService();
 	}
@@ -78,18 +78,25 @@ public class MainController {
 		}
 
         if (buscarMkbAsk && !esPlanta2000) {
-            Documento mkb = mkbServise.documentoPara(c);
+		    boolean esValvula = false;
+			Pattern p = Pattern.compile("\\w{3}\\d{2}AA\\d{3}\\w?");
+			Matcher m = p.matcher(c);
+			if (m.find())
+			    esValvula = true;
 
-            if (mkb != null)
-                docs.add(mkb);
-            else {
-                Documento ask = askService.documentoPara(c);
-                if (ask != null)
-                    docs.add(ask);
+            if (!esValvula) {
+                List<Documento> mkbs = mkbServise.documentoPara(c);
+                docs.addAll(mkbs);
 
+            } else {
+                List<Documento> asks = askService.documentoPara(c);
+                if (asks != null)
+                    docs.addAll(asks);
+
+                List<Documento> mkb;
                 mkb = mkbServise.documentoParaComponente(c);
                 if (mkb != null)
-                    docs.add(mkb);
+                    docs.addAll(mkb);
             }
         }
 

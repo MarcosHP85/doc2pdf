@@ -1,6 +1,8 @@
 package ar.nasa.ask.domain;
 
 import ar.nasa.domain.Documento;
+import ar.nasa.mesa.domain.MesaAsk;
+import ar.nasa.mesa.domain.MesaMkb;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -36,6 +38,23 @@ public class Ask extends Documento {
             }
         }
 
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof MesaAsk) {
+            MesaAsk mesaAsk = (MesaAsk) obj;
+            boolean equal = true;
+
+            for (int i=0; i < this.askAreaPrincipals.size(); i++) {
+                if (!this.askAreaPrincipals.get(i).equals(mesaAsk.getAsk6s().get(i))) {
+                    equal = false;
+                    break;
+                }
+            }
+            return equal;
+        }
+        return super.equals(obj);
     }
 
     @Override

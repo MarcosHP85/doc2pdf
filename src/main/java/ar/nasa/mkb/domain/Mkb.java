@@ -1,6 +1,7 @@
 package ar.nasa.mkb.domain;
 
 import ar.nasa.domain.Documento;
+import ar.nasa.mesa.domain.MesaMkb;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -36,6 +37,23 @@ public class Mkb extends Documento {
             }
         }
 
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof MesaMkb) {
+            MesaMkb mesaMkb = (MesaMkb)obj;
+            boolean equal = true;
+
+            for (int i=0; i < this.mkbAreaPrincipals.size(); i++) {
+                if (!this.mkbAreaPrincipals.get(i).equals(mesaMkb.getMkb6s().get(i))) {
+                    equal = false;
+                    break;
+                }
+            }
+            return equal;
+        }
+        return super.equals(obj);
     }
 
     @Override

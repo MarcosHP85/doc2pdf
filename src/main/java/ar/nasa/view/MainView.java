@@ -50,7 +50,7 @@ public class MainView {
         stage = primaryStage;
         controller = new MainController();
 
-        stage.setTitle("PyP - batch documentación");
+        stage.setTitle("PyP - batch documentaciÃ³n");
 
         VBox vbox = new VBox(boxBuscar(), boxOpciones(), boxLista(), boxDestino(), boxDescargar());
         vbox.setMinWidth(500);
@@ -111,7 +111,7 @@ public class MainView {
         checkHisto = new CheckBox("Historial");
         VBox vBoxA = new VBox(checkLyP, checkHisto);
         vBoxA.setSpacing(10);
-        checkHdM = new CheckBox("Hoja Medición");
+        checkHdM = new CheckBox("Hoja MediciÃ³n");
         checkLvL = new CheckBox("Valores Limites");
         VBox vBoxB = new VBox(checkHdM, checkLvL);
         vBoxB.setSpacing(10);
@@ -189,9 +189,7 @@ public class MainView {
         textBuscar.setDisable(valor);
         botonBuscar.setDisable(valor);
         tree.setDisable(valor);
-        textDestino.setDisable(valor);
         botonDestino.setDisable(valor);
-        botonDescargar.setDisable(valor);
         checkTodo.setDisable(valor);
         checkLyP.setDisable(valor);
         checkHisto.setDisable(valor);
@@ -249,7 +247,7 @@ public class MainView {
                 Integer vuelta = 0;
                 for (String c: listaBuscar) {
 
-                    stringInfo = "Buscando documentación de " + c + " [ " + ++vuelta + " / " + listaBuscar.size() +" ]";
+                    stringInfo = "Buscando documentaciÃ³n de " + c + " [ " + ++vuelta + " / " + listaBuscar.size() +" ]";
                     Platform.runLater(() -> textInfo.setText(stringInfo));
 
                     List<Documento> docs = controller.documentosPara(c);
@@ -263,8 +261,8 @@ public class MainView {
                         if (docs.get(0) instanceof LverYPacc) {
                             LverYPacc lverYPacc = (LverYPacc) docs.get(0);
                             name = lverYPacc.getOt().getComponente().getMchCode()
-                                    + "-" + lverYPacc.getOt().getTipoTrabajo()
                                     + "-" + lverYPacc.getOt().getOrganizacion().getOrgCode()
+                                    + "-" + lverYPacc.getOt().getTipoTrabajo()
                                     + " " + lverYPacc.getOt().getDirectiva();
                         }
                         CheckBoxTreeItem<Documento> treeItem = new CheckBoxTreeItem<>(new Grupo(name));
@@ -281,9 +279,15 @@ public class MainView {
                     treeItemRoot.setSelected(true);
                     treeItemRoot.setExpanded(true);
 
-                    Platform.runLater(() -> botonDescargar.setDisable(false));
+                    Platform.runLater(() -> {
+                        botonDescargar.setDisable(false);
+                        textDestino.setDisable(false);
+                    });
                 } else {
-                    Platform.runLater(() -> botonDescargar.setDisable(false));
+                    Platform.runLater(() -> {
+                        botonDescargar.setDisable(true);
+                        textDestino.setDisable(true);
+                    });
                 }
 
                 updateProgress(1, 1);
@@ -317,6 +321,7 @@ public class MainView {
 
         textDestino = new TextField(carpeta);
         textDestino.setOnAction(event -> actionDescargar());
+        textDestino.setDisable(true);
         botonDestino = new Button("...");
         botonDestino.defaultButtonProperty().bind(botonDestino.focusedProperty());
 

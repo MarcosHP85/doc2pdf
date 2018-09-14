@@ -3,22 +3,44 @@ package ar.nasa.service;
 import ar.nasa.ask.domain.Ask;
 import ar.nasa.ask.domain.AskRepository;
 import ar.nasa.domain.Documento;
+import ar.nasa.mesa.domain.MesaAsk;
+import ar.nasa.mesa.domain.MesaAskRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AskService {
 
     private AskRepository askRepository;
+    private MesaAskRepository mesaAskRepository;
 
-    public Documento documentoPara(String c) {
-        Ask ask = getMkbRepository().findBy(c);
+    public List<Documento> documentoPara(String c) {
+        Ask ask = getAskRepository().findBy(c);
+        MesaAsk mesaAsks = getMesaAskRepository().findBy(c);
 
-        return (ask.getAskAreaPrincipals().isEmpty()) ? null : ask;
+        if (!ask.getAskAreaPrincipals().isEmpty()) {
+            List<Documento> result = new ArrayList<>();
+            result.add(ask);
+            if (!(ask.equals(mesaAsks)))
+                result.add(mesaAsks);
+
+            return result;
+        }
+        return null;
     }
 
-    private AskRepository getMkbRepository() {
+    private AskRepository getAskRepository() {
         if (askRepository == null)
             askRepository = new AskRepository();
 
         return askRepository;
+    }
+
+    private MesaAskRepository getMesaAskRepository() {
+        if (mesaAskRepository == null)
+            mesaAskRepository = new MesaAskRepository();
+
+        return mesaAskRepository;
     }
 
     public void close() {
