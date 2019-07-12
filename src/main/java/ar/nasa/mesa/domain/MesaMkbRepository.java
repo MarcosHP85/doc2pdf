@@ -31,7 +31,7 @@ public class MesaMkbRepository {
         List<Mkb6oc> mkb6ocs;
         for (Mkb6 mkb: mkb6s) {
             mkb6ocs = entityManager
-                    .createQuery("FROM Mkb6oc v WHERE v.kennzeic = :kennzeic AND (v.fz = :fz OR (v.fz IS NULL AND :fz IS NULL)) ORDER BY v.prek1", Mkb6oc.class)
+                    .createQuery("FROM Mkb6oc v WHERE v.kennzeic = :kennzeic AND v.fz = :fz ORDER BY v.prek1", Mkb6oc.class)
                     .setParameter("kennzeic", mkb.getKennzeic())
                     .setParameter("fz", mkb.getFz())
                     .getResultList();
@@ -54,7 +54,7 @@ public class MesaMkbRepository {
                 tmp.add(mkb6s.get(i));
 
             }
-            while (++i < mkb6s.size() - 2
+            while (++i < mkb6s.size()
                     && mkb6s.get(i - 1).getKennzeic().equals(mkb6s.get(i).getKennzeic()));
 
             mkbs.add(new MesaMkb(tmp));

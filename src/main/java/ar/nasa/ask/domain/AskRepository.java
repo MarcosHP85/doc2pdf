@@ -3,6 +3,7 @@ package ar.nasa.ask.domain;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.Collections;
 import java.util.List;
 
 public class AskRepository {
@@ -24,10 +25,14 @@ public class AskRepository {
 
         for (AskAreaPrincipal ask: askAreaPrincipals) {
             List<AskAreaVariable> askAreaVariables = entityManager
-                    .createQuery("FROM AskAreaVariable v WHERE v.kks = :kks AND (v.kks2 = :kks2 OR (v.kks2 IS NULL AND :kks2 IS NULL)) ORDER BY v.pre1", AskAreaVariable.class)
+                    .createQuery("FROM AskAreaVariable v WHERE v.kks = :kks AND (v.kks2 = :kks2 OR (v.kks2 IS NULL AND :kks2 IS NULL)) ORDER BY v.id DESC", AskAreaVariable.class)
+                    .setMaxResults(14)
                     .setParameter("kks", ask.getKks())
                     .setParameter("kks2", ask.getKks2())
                     .getResultList();
+
+            if (!askAreaVariables.isEmpty() && !askAreaVariables.get(0).getPre1().equals("FA"))
+                Collections.reverse(askAreaVariables);
 
             ask.setAreaVariables(askAreaVariables);
         }

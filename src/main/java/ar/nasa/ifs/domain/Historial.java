@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import ar.nasa.domain.Documento;
@@ -56,6 +57,10 @@ public class Historial extends Documento {
 
 			context.put("ots", ots);
 			context.put("busqueda", busqueda);
+
+			// Forzando la fecha
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			context.put("hoy", sdf.format(new Date()));
 			
 			Options options = Options.getTo(ConverterTypeTo.PDF).via(ConverterTypeVia.ODFDOM);
 			REPORT.convert(context, options, out);

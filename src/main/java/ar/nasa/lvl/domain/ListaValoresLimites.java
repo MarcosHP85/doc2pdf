@@ -59,6 +59,10 @@ public class ListaValoresLimites extends Documento {
 			IContext context = REPORT.createContext();
 			context.put("busqueda", busqueda);
 			context.put("valores", valores);
+
+			// Forzando la fecha
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            context.put("hoy", sdf.format(new Date()));
 			
 			Options options = Options.getTo(ConverterTypeTo.PDF).via(ConverterTypeVia.ODFDOM);
 		

@@ -32,6 +32,7 @@ public class OtActivaIfs {
 	private String planifica;
 	private String plantaOt;
 	private Date inicioProg;
+	private Boolean requierePpm;
 
 	@Id
 	@Column(name = "WO_NO")
@@ -130,8 +131,16 @@ public class OtActivaIfs {
 	public void setPlantaOt(String plantaOt) {
 		this.plantaOt = plantaOt;
 	}
-	
-	@ManyToOne
+
+    @Column(name = "REQUIERE_PPM")
+    public Boolean getRequierePpm() {
+        return requierePpm;
+    }
+    public void setRequierePpm(Boolean requierePpm) {
+        this.requierePpm = requierePpm;
+    }
+
+    @ManyToOne
 	@JoinColumn(name = "ORG_CODE")
 	public Organizacion getOrganizacion() {
 		return organizacion;

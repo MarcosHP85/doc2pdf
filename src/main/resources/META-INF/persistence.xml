@@ -65,7 +65,7 @@
 			<!--<property name="hibernate.format_sql" value="true"/>-->
         <!--</properties>-->
 		<properties>
-			<property name="hibernate.connection.url" value="jdbc:relique:csv:zip:lib/mesadb.zip?separator=;"/>
+			<property name="hibernate.connection.url" value="jdbc:relique:csv:zip:P:/PAQUETES DE TRABAJO/PLANIFICACION I&amp;C/doc2pdf/lib/mesadb.zip?separator=;"/>
 			<property name="hibernate.connection.driver_class" value="org.relique.jdbc.csv.CsvDriver"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
 			<property name="hibernate.show_sql" value="true"/>

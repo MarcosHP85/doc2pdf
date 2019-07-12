@@ -1,11 +1,15 @@
 package ar.nasa.service;
 
 import ar.nasa.domain.Documento;
+import ar.nasa.mesa.domain.MesaMkb;
 import ar.nasa.mesa.domain.MesaMkbRepository;
+import ar.nasa.mesa.domain.Mkb6;
 import ar.nasa.mkb.domain.Mkb;
+import ar.nasa.mkb.domain.MkbAreaPrincipal;
 import ar.nasa.mkb.domain.MkbRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MkbService {
@@ -18,6 +22,7 @@ public class MkbService {
         mkbs = getMkbRepository().findBy(c);
         List<Documento> mesaMkbs;
         mesaMkbs = getMesaMkbRepository().findBy(c);
+//        Collections.reverse(mesaMkbs);
 
         List<Documento> result = new ArrayList<>();
         for (int i=0; i < mkbs.size(); i++) {
@@ -27,6 +32,16 @@ public class MkbService {
             else
                 break;
         }
+//        for (Documento docMesa: mesaMkbs) {
+//            MesaMkb mesa = (MesaMkb)docMesa;
+//            for (Documento docMkb: mkbs) {
+//                Mkb mkb = (Mkb)docMkb;
+//                Mkb6 firstMesa = mesa.getMkb6s().get(0);
+//                MkbAreaPrincipal firstMkb = mkb.getMkbAreaPrincipals().get(0);
+//                if (firstMesa.getKennzeic().equals(firstMkb.getComponente())
+//                    && firstMesa.getFz().equals(firstMkb.getKks2())
+//            }
+//        }
         mkbs.addAll(result);
 
         return (mkbs.isEmpty()) ? null : mkbs;

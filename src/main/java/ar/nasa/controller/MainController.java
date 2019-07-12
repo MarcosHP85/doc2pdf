@@ -86,7 +86,9 @@ public class MainController {
 
             if (!esValvula) {
                 List<Documento> mkbs = mkbServise.documentoPara(c);
-                docs.addAll(mkbs);
+
+                if (mkbs != null)
+                    docs.addAll(mkbs);
 
             } else {
                 List<Documento> asks = askService.documentoPara(c);

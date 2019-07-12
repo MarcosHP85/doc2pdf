@@ -131,14 +131,12 @@ public class Mkb6oc {
 	public void setUv(String uv) {
 		this.uv = uv;
 	}
-	@Column(name = "prek1")
 	public String getPrek1() {
 		return prek1;
 	}
 	public void setPrek1(String prek1) {
 		this.prek1 = prek1;
 	}
-    @Column(name = "prek2")
 	public String getPrek2() {
 		return prek2;
 	}

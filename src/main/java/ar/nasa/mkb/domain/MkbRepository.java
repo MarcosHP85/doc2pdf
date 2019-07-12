@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MkbRepository {
@@ -27,10 +28,14 @@ public class MkbRepository {
 
         for (MkbAreaPrincipal mkb: mkbAreaPrincipals) {
             List<MkbAreaVariable> mkbAreaVariables = entityManager
-                    .createQuery("FROM MkbAreaVariable v WHERE v.kks = :kks AND (v.kks2 = :kks2 OR (v.kks2 IS NULL AND :kks2 IS NULL)) ORDER BY v.in", MkbAreaVariable.class)
+                    .createQuery("FROM MkbAreaVariable v WHERE v.kks = :kks AND (v.kks2 = :kks2 OR (v.kks2 IS NULL AND :kks2 IS NULL)) ORDER BY v.id DESC", MkbAreaVariable.class)
+                    .setMaxResults(14)
                     .setParameter("kks", mkb.getKks())
                     .setParameter("kks2", mkb.getKks2())
                     .getResultList();
+
+            if (!mkbAreaVariables.isEmpty() && mkbAreaVariables.get(0).getIn() != null && !mkbAreaVariables.get(0).getIn().equals("FA"))
+                Collections.reverse(mkbAreaVariables);
 
             mkb.setAreaVariables(mkbAreaVariables);
         }
@@ -50,7 +55,7 @@ public class MkbRepository {
                 tmp.add(mkbAreaPrincipals.get(i));
 
             }
-            while (++i < mkbAreaPrincipals.size() - 2
+            while (++i < mkbAreaPrincipals.size()
                     && mkbAreaPrincipals.get(i - 1).getKks().equals(mkbAreaPrincipals.get(i).getKks()));
 
             mkbs.add(new Mkb(tmp));

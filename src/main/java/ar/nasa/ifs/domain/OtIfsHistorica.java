@@ -28,10 +28,11 @@ public class OtIfsHistorica {
 	private Date fechaInicio;
 	private Date fechaFin;
 	private String woStatusId;
+    private String descripcionCausa;
 
 	@Id
 	@Column(name = "WO_NO")
-	Integer getOtId() {
+	public Integer getOtId() {
 		return otId;
 	}
 	public void setOtId(Integer numOt) {
@@ -135,7 +136,7 @@ public class OtIfsHistorica {
 	}
 	
 	@Column(name = "PERFORMED_ACTION_LO")
-	String getTrabajoRealizado() {
+	public String getTrabajoRealizado() {
 		return trabajoRealizado;
 	}
 	void setTrabajoRealizado(String trabajoRealizado) {
@@ -159,7 +160,7 @@ public class OtIfsHistorica {
 	}
 	
 	@Column(name = "REAL_F_DATE")
-	Date getFechaFin() {
+	public Date getFechaFin() {
 		return fechaFin;
 	}
 	public void setFechaFin(Date fechaFin) {
@@ -172,6 +173,14 @@ public class OtIfsHistorica {
     }
     public void setWoStatusId(String woStatusId) {
         this.woStatusId = woStatusId;
+    }
+
+    @Column(name = "ERR_CAUSE_LO")
+    public String getDescripcionCausa() {
+        return descripcionCausa;
+    }
+    public void setDescripcionCausa(String descripcionCausa) {
+        this.descripcionCausa = descripcionCausa;
     }
 
     @Override
@@ -195,6 +204,7 @@ public class OtIfsHistorica {
                 ", fechaInicio=" + fechaInicio +
                 ", fechaFin=" + fechaFin +
                 ", woStatusId='" + woStatusId + '\'' +
+                ", descripcionCausa='" + descripcionCausa + '\'' +
                 '}';
     }
 }

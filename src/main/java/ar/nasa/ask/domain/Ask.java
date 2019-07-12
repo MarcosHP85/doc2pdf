@@ -46,10 +46,14 @@ public class Ask extends Documento {
             MesaAsk mesaAsk = (MesaAsk) obj;
             boolean equal = true;
 
-            for (int i=0; i < this.askAreaPrincipals.size(); i++) {
-                if (!this.askAreaPrincipals.get(i).equals(mesaAsk.getAsk6s().get(i))) {
-                    equal = false;
-                    break;
+            if (mesaAsk.getAsk6s().size() > this.getAskAreaPrincipals().size()) {
+                equal = false;
+            } else {
+                for (int i = 0; i < mesaAsk.getAsk6s().size(); i++) {
+                    if (!this.askAreaPrincipals.get(i).equals(mesaAsk.getAsk6s().get(i))) {
+                        equal = false;
+                        break;
+                    }
                 }
             }
             return equal;

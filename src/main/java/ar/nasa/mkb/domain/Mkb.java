@@ -45,10 +45,14 @@ public class Mkb extends Documento {
             MesaMkb mesaMkb = (MesaMkb)obj;
             boolean equal = true;
 
-            for (int i=0; i < this.mkbAreaPrincipals.size(); i++) {
-                if (!this.mkbAreaPrincipals.get(i).equals(mesaMkb.getMkb6s().get(i))) {
-                    equal = false;
-                    break;
+            if (mesaMkb.getMkb6s().size() > this.getMkbAreaPrincipals().size()) {
+                equal = false;
+            } else {
+                for (int i = 0; i < mesaMkb.getMkb6s().size(); i++) {
+                    if (!this.mkbAreaPrincipals.get(i).equals(mesaMkb.getMkb6s().get(i))) {
+                        equal = false;
+                        break;
+                    }
                 }
             }
             return equal;
