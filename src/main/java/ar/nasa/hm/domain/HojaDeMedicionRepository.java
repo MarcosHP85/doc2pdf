@@ -6,11 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.nasa.domain.Documento;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class HojaDeMedicionRepository {
 
-	public static final String HTML_FOLDER = "\\\\oftec.cna1.central.nasa\\htdocs\\documentos\\datoscomponentes\\mediciones\\Hojas Medicion";
-//	public static final String HTML_FOLDER = "/Volumes/GIT/Hojas Medicion";
+	public final String HTML_FOLDER;
+
+	public HojaDeMedicionRepository(Dotenv dotenv) {
+		HTML_FOLDER = dotenv.get("HDEM_FOLDER", "\\\\oftec.cna1.central.nasa\\htdocs\\documentos\\datoscomponentes\\mediciones\\Hojas Medicion");
+	}
 	
 	public List<Documento> findBy(String c) {
 		File dir = new File(HTML_FOLDER);

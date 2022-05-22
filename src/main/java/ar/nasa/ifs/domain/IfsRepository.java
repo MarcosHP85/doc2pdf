@@ -1,5 +1,7 @@
 package ar.nasa.ifs.domain;
 
+import java.io.*;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,17 +21,45 @@ public class IfsRepository {
 	public LverYPacc findLverYPaccBy(Long numOt) {
 		
 		EntityManager entityManager = sessionFactory.createEntityManager();
-		OtActivaIfs ot;
+		OtActivaIfs ot = null;
+		List<DocObject> docs;
 
 		try {
 			ot = entityManager.createQuery("FROM OtActivaIfs o WHERE o.numOt = :n", OtActivaIfs.class)
 					.setParameter("n", numOt)
 					.getSingleResult();
+
+			if (ot.getNumOtMadre() != null) {
+				OtActivaIfs otMadre;
+				otMadre = entityManager.createQuery("FROM OtActivaIfs o WHERE o.numOt = :n", OtActivaIfs.class)
+						.setParameter("n", ot.getNumOtMadre())
+						.getSingleResult();
+				ot.setOtMadre(otMadre);
+			}
+//			docs = entityManager.createQuery("FROM DocObject d WHERE d.keyRef = :o", DocObject.class)
+//                    .setParameter("o", "WO_NO=" + numOt + "^")
+//                    .getResultList();
+//
+            entityManager.close();
+//
+//            File f = new File("D:\\descarga.pdf");
+//            FileOutputStream fo = null;
+//
+//            fo = new FileOutputStream(f);
+//
+//            InputStream in = null;
+//            in = docs.get(0).getFile().getFileData().getBinaryStream();
+//
+//            byte[] buffer = new byte[1024];
+//            while (in.read(buffer) > 0) {
+//                fo.write(buffer);
+//            }
+//
+//            fo.close();
+
 		} catch (NoResultException e) {
-			ot = null;
+            e.printStackTrace();
 		}
-		
-		entityManager.close();
 		
 		return new LverYPacc(ot);
 	}

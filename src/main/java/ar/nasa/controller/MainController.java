@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import ar.nasa.domain.Documento;
 import ar.nasa.ifs.domain.LverYPacc;
 import ar.nasa.service.*;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class MainController {
 
@@ -25,9 +26,16 @@ public class MainController {
 	private boolean buscarPcf;
 	
 	public MainController() {
-		hojaDeMedicionService = new HojaDeMedicionService();
+		Dotenv dotenv = Dotenv
+				.configure()
+				.ignoreIfMissing()
+				.ignoreIfMalformed()
+				.directory("P:\\PAQUETES DE TRABAJO\\PLANIFICACION I&C\\doc2pdf\\lib")
+				.filename("env").load();
+
+		hojaDeMedicionService = new HojaDeMedicionService(dotenv);
 		listaValoresLimitesService = new ListaValoresLimitesService();
-		planoCodFunService = new PlanoCodFunService();
+		planoCodFunService = new PlanoCodFunService(dotenv);
 		mkbServise = new MkbService();
 		askService = new AskService();
 		ifsService = new IfsService();
@@ -77,7 +85,7 @@ public class MainController {
 				docs.add(lvl);
 		}
 
-        if (buscarMkbAsk && !esPlanta2000) {
+        if (buscarMkbAsk && c.length() > 3 && !esPlanta2000) {
 		    boolean esValvula = false;
 			Pattern p = Pattern.compile("\\w{3}\\d{2}AA\\d{3}\\w?");
 			Matcher m = p.matcher(c);
@@ -102,12 +110,12 @@ public class MainController {
             }
         }
 
-        if (buscarPcf && !esPlanta2000) {
+        if (buscarPcf && c.length() > 3 && !esPlanta2000) {
 		    List<Documento> pcf = planoCodFunService.documentoPara(c);
 		    if (pcf != null)
 		        docs.addAll(pcf);
         }
-		
+
 		return docs;
 	}
 

@@ -1,6 +1,7 @@
 package ar.nasa.pcf.domain;
 
 import ar.nasa.domain.Documento;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,8 +11,11 @@ import java.util.List;
 
 public class PlanoCodFunRepository {
 
-    private static final String PCF_FOLDER = "\\\\doccnaii\\tecnica\\ic\\cf";
-//    private static final String PCF_FOLDER = "/Users/ElMUDO-PC/cf";
+    private final String PCF_FOLDER;
+
+    public PlanoCodFunRepository(Dotenv dotenv) {
+        PCF_FOLDER = dotenv.get("CF_FOLDER", "\\\\doccnaii\\planos\\ic\\cf");
+    }
 
     public List<Documento> findBy(String c) {
         List<Documento> listPcf = new ArrayList<>();

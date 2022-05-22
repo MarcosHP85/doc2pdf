@@ -1,18 +1,15 @@
 package ar.nasa.ifs.domain;
 
+import org.hibernate.annotations.JoinFormula;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.IsoFields;
 import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "ACTIVE_WORK_ORDER_TAB", schema = "IFSATA", catalog = "IFSATA")
@@ -33,6 +30,8 @@ public class OtActivaIfs {
 	private String plantaOt;
 	private Date inicioProg;
 	private Boolean requierePpm;
+	private Long numOtMadre;
+	private OtActivaIfs otMadre;
 
 	@Id
 	@Column(name = "WO_NO")
@@ -165,5 +164,21 @@ public class OtActivaIfs {
 	}
 	public void setInicioProg(Date inicioProg) {
 		this.inicioProg = inicioProg;
+	}
+
+	@Column(name = "WO_NO_MADRE")
+	public Long getNumOtMadre() {
+		return numOtMadre;
+	}
+	public void setNumOtMadre(Long numOtMadre) {
+		this.numOtMadre = numOtMadre;
+	}
+
+	@Transient
+	public OtActivaIfs getOtMadre() {
+		return otMadre;
+	}
+	public void setOtMadre(OtActivaIfs otMadre) {
+		this.otMadre = otMadre;
 	}
 }

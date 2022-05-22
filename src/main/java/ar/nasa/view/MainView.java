@@ -315,11 +315,12 @@ public class MainView {
     }
 
     private HBox boxDestino() {
-        String carpeta = System.getProperty("user.home");
+//        String carpeta = System.getProperty("user.home");
+        String carpeta = "";
         DirectoryChooser chooserDestino = new DirectoryChooser();
         chooserDestino.setInitialDirectory(new File(carpeta));
 
-        textDestino = new TextField(carpeta);
+        textDestino = new TextField(chooserDestino.getInitialDirectory().getAbsolutePath());
         textDestino.setOnAction(event -> actionDescargar());
         textDestino.setDisable(true);
         botonDestino = new Button("...");

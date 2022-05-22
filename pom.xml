@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ar.nasa</groupId>
 	<artifactId>doc2pdf</artifactId>
-	<version>0.1.7-SNAPSHOT</version>
+	<version>0.1.15</version>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -166,7 +166,13 @@
 			<artifactId>fr.opensagres.poi.xwpf.converter.pdf.itext5</artifactId>
 			<version>${xdocreport.version}</version>
 		</dependency> -->
-		
+
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>java-dotenv</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+
 		<!-- XDocReport Converter odt -->
 		<dependency>
 			<groupId>fr.opensagres.xdocreport</groupId>
@@ -194,7 +200,15 @@
 		    <artifactId>fr.opensagres.xdocreport.itext5.extension</artifactId>
 		    <version>${xdocreport.version}</version>
 		</dependency>
-				
+
+		<!-- https://mvnrepository.com/artifact/com.sap.cloud.db.jdbc/ngdbc -->
+		<dependency>
+			<groupId>com.sap.cloud.db.jdbc</groupId>
+			<artifactId>ngdbc</artifactId>
+			<version>2.5.52</version>
+		</dependency>
+
+
 	</dependencies>
 	
 	<properties>

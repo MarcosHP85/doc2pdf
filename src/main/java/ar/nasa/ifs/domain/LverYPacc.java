@@ -8,6 +8,8 @@ import ar.nasa.mkb.domain.Mkb;
 import ar.nasa.pcf.domain.PlanoCodFun;
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.document.IXDocReport;
+import fr.opensagres.xdocreport.document.images.ClassPathImageProvider;
+import fr.opensagres.xdocreport.document.images.IImageProvider;
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
 import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;
@@ -47,14 +49,23 @@ public class LverYPacc extends Documento {
 			
 			FileOutputStream out_lver = new FileOutputStream(carpeta + File.separatorChar + "" + ot.getNumOt() + " LVer.docx");
 			FileOutputStream out_pacc = new FileOutputStream(carpeta + File.separatorChar + "" + ot.getNumOt() + " PAcc.docx");
-			
+
+            Boolean firma = ot.getComponente().getCriticality() == null ? true
+                    : !(ot.getComponente().getCriticality().startsWith("C1")
+                    || ot.getComponente().getCriticality().startsWith("C2")
+                    || ot.getComponente().getCriticality().startsWith("SPV")
+            );
+
 			IContext context_lver = REPORT_LVER.createContext();
 			context_lver.put("ot", ot);
 			context_lver.put("user", getUser());
 			context_lver.put("i", index);
+            context_lver.put("firma", firma);
+
 			IContext context_pacc = REPORT_PACC.createContext();
 			context_pacc.put("ot", ot);
 			context_pacc.put("user", getUser());
+            context_pacc.put("firma", firma);
 		
 			REPORT_LVER.process(context_lver, out_lver);
 			REPORT_PACC.process(context_pacc, out_pacc);

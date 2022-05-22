@@ -14,6 +14,7 @@ public class Equipo {
 	private String mchPos;
 	private String mchLoc;
 	private String mchDoc;
+	private String criticality;
 	
 	@Id
 	@Column(name = "MCH_CODE")
@@ -54,5 +55,13 @@ public class Equipo {
 	}
 	public void setMchLoc(String mchLoc) {
 		this.mchLoc = mchLoc;
+	}
+
+	@Column(name = "CRITICALITY")
+	public String getCriticality() {
+		return criticality;
+	}
+	public void setCriticality(String criticality) {
+		this.criticality = criticality;
 	}
 }
