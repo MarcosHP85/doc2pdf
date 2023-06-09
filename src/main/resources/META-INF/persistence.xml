@@ -4,10 +4,11 @@
         version="2.0">
     <persistence-unit name="oracle.ifs">
 	    <class>ar.nasa.ifs.domain.OtActivaIfs</class>
+		<class>ar.nasa.ifs.domain.Equipo</class>
 		<properties>
 			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@//10.10.1.61:1521/CNAIIPRO"/>
 			<property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
 			<property name="hibernate.connection.username" value="IFSATA"/>
 			<property name="hibernate.connection.password" value="ifscna1234"/>
 			<property name="hibernate.show_sql" value="true"/>
@@ -72,17 +73,6 @@
 			<property name="hibernate.format_sql" value="true"/>
 		</properties>
     </persistence-unit>
-	
-	<persistence-unit name="mysql.ifs">
-	    <class>ar.nasa.ifs.domain.OtActivaIfs</class>
-		<properties>
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost/"/>
-			<property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
-			<property name="hibernate.connection.username" value="root"/>
-			<property name="hibernate.connection.password" value="12345"/>
-		</properties>
-	</persistence-unit>
 	<persistence-unit name="mysql.valoresLimites">
 		<class>ar.nasa.lvl.domain.Valor</class>
 		<properties>

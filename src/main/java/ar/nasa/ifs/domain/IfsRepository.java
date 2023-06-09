@@ -15,19 +15,26 @@ public class IfsRepository {
 	
 	public IfsRepository() {
 		sessionFactory = Persistence.createEntityManagerFactory("oracle.ifs");
-//		sessionFactory = Persistence.createEntityManagerFactory("mysql.ifs");
 	}
 	
 	public LverYPacc findLverYPaccBy(Long numOt) {
 		
 		EntityManager entityManager = sessionFactory.createEntityManager();
 		OtActivaIfs ot = null;
+		Equipo equipo = null;
 		List<DocObject> docs;
 
 		try {
 			ot = entityManager.createQuery("FROM OtActivaIfs o WHERE o.numOt = :n", OtActivaIfs.class)
 					.setParameter("n", numOt)
 					.getSingleResult();
+
+//			equipo = entityManager.createQuery("FROM Equipo e WHERE e.mchCode = :m AND e.contract = :c", Equipo.class)
+//					.setParameter("m", ot.getMchCode())
+//					.setParameter("c", ot.getPlantaOt())
+//					.getSingleResult();
+//
+//			ot.setComponente(equipo);
 
 			if (ot.getNumOtMadre() != null) {
 				OtActivaIfs otMadre;

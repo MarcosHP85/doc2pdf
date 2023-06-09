@@ -80,7 +80,7 @@ public class LverYPacc extends Documento {
 	@Override
 	public String toString() {
 		return "LVer PAcc: " + ot.getNumOt()
-			+ " " + ot.getOrganizacion().getOrgCode()
+			+ " " + ot.getOrganizacion()
 			+ " " + ot.getTipoTrabajo()
 			+ " " + ot.getDirectiva();
 	}

@@ -124,6 +124,8 @@ public class MainView {
         checkTodo.setSelected(false);
         checkLyP.setSelected(false);
         controller.setBuscarLyp(false);
+        checkHisto.setSelected(false);
+        controller.setBuscarHisto(false);
 
         checkTodo.setOnAction(
                 (e) -> checkTodo(checkTodo.isSelected()));

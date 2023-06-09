@@ -16,11 +16,12 @@ import javax.persistence.*;
 public class OtActivaIfs {
 
 	private Long numOt;
+	private String mchCode;
 	private Equipo componente;
 	private String tarea;
 	private String error;
 	private Character prioridad;
-	private Organizacion organizacion;
+	private String organizacion;
 	private String estado;
 	private String tipoTrabajo;
 	private String comentarioPla;
@@ -41,16 +42,28 @@ public class OtActivaIfs {
 	public void setNumOt(Long numOt) {
 		this.numOt = numOt;
 	}
-	
+
+	@Column(name = "MCH_CODE")
+	public String getMchCode() {
+		return mchCode;
+	}
+	public void setMchCode(String mchCode) {
+		this.mchCode = mchCode;
+	}
+
+//	@Transient
 	@ManyToOne
-	@JoinColumn(name = "MCH_CODE")
+	@JoinColumns({
+			@JoinColumn(name = "contract", referencedColumnName = "CONTRACT"),
+			@JoinColumn(name = "mch_code", referencedColumnName = "MCH_CODE")
+	})
 	public Equipo getComponente() {
 		return componente;
 	}
 	public void setComponente(Equipo componente) {
 		this.componente = componente;
 	}
-	
+
 	@Column(name = "WORK_DESCR_LO")
 	public String getTarea() {
 		return (tarea == null) ? "" : tarea.replaceAll("\r\n\r\n", "\n").trim();
@@ -139,12 +152,11 @@ public class OtActivaIfs {
         this.requierePpm = requierePpm;
     }
 
-    @ManyToOne
-	@JoinColumn(name = "ORG_CODE")
-	public Organizacion getOrganizacion() {
+	@Column(name = "ORG_CODE")
+	public String getOrganizacion() {
 		return organizacion;
 	}
-	public void setOrganizacion(Organizacion organizacion) {
+	public void setOrganizacion(String organizacion) {
 		this.organizacion = organizacion;
 	}
 	
