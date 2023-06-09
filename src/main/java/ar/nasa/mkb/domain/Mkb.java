@@ -30,7 +30,7 @@ public class Mkb extends Documento {
 
             try {
                 FileUtils.copyURLToFile(
-                        new URL("http://doccnaii.cna1.central.nasa/mkb/pdf/visual/" + ap.getId()),
+                        new URL("http://doccna.cna1.central.nasa/mkb/pdf/visual/" + ap.getId()),
                         new File(carpeta + File.separatorChar + fileName + ".pdf"));
             } catch (IOException e) {
                 e.printStackTrace();

@@ -121,6 +121,9 @@ public class MainView {
         vBoxC.setSpacing(10);
 
         checkTodo(true);
+        checkTodo.setSelected(false);
+        checkLyP.setSelected(false);
+        controller.setBuscarLyp(false);
 
         checkTodo.setOnAction(
                 (e) -> checkTodo(checkTodo.isSelected()));
@@ -261,7 +264,7 @@ public class MainView {
                         if (docs.get(0) instanceof LverYPacc) {
                             LverYPacc lverYPacc = (LverYPacc) docs.get(0);
                             name = lverYPacc.getOt().getComponente().getMchCode()
-                                    + "-" + lverYPacc.getOt().getOrganizacion().getOrgCode()
+                                    + "-" + lverYPacc.getOt().getOrganizacion()
                                     + "-" + lverYPacc.getOt().getTipoTrabajo()
                                     + " " + lverYPacc.getOt().getDirectiva();
                         }
